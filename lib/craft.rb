@@ -9,4 +9,5 @@ class Craft
   def supplies_required
     @supplies_required.to_h
   end
+  
 end
