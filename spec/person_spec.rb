@@ -11,6 +11,8 @@ RSpec.describe Person do
       expect(@person.name).to eq("Hector")
       expect(@person.interests).to be_an Array
       expect(@person.interests).to eq(["sewing", "millinery", "drawing"])
+      expect(@person.supplies).to be_a Hash
+      expect(@person.supplies).to eq({})
     end
   end
 end
