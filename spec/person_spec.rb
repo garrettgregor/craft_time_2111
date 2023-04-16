@@ -29,5 +29,20 @@ RSpec.describe Person do
       
       expect(@person.supplies).to eq(expected)
     end
+    
+    it "can add multiple supplies to the person" do
+      expect(@person.supplies).to be_a Hash
+      expect(@person.supplies).to eq({})
+      @person.add_supply('fabric', 4)
+      
+      @person.add_supply('scissors', 1)
+      
+      expected = {
+        "fabric"=>4,
+        "scissors"=>1
+      }
+
+      expect(@person.supplies).to eq(expected)
+    end
   end
 end
