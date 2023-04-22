@@ -23,12 +23,6 @@ RSpec.describe Event do
       event = Event.new("Carla's Craft Connection", [sewing, knitting], [hector, toni])
 
       expect(event.attendee_names).to eq(["Hector", "Toni"])
-
-      # event.craft_with_most_supplies
-      # #=> "sewing"
-
-      # event.supply_list
-      # #=> ["fabric", "scissors", "thread", "sewing_needles", "yarn", "knitting_needles"]
     end
   end
 
