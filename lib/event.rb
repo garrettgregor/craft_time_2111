@@ -31,4 +31,5 @@ class Event
     end
     supply_list.uniq
   end
+  
 end
