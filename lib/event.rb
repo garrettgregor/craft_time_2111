@@ -21,4 +21,14 @@ class Event
     end
     craft_with_most_supplies.name
   end
+
+  def supply_list
+    supply_list = []
+    crafts.each do |craft|
+      craft.supplies_required.each do |supply, amount|
+        supply_list << supply.to_s
+      end
+    end
+    supply_list.uniq
+  end
 end
