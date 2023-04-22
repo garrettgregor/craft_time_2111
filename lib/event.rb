@@ -31,5 +31,19 @@ class Event
     end
     supply_list.uniq
   end
-  
+
+  def attendees_by_craft_interest
+    attendees_by_craft_interest = {}
+    crafts.each do |craft|
+      attendees_by_craft_interest[craft.name] = []
+    end
+    attendees_by_craft_interest.each do |craft_name, arr|
+      attendees.each do |attendee|
+        if attendee.interests.include?(craft_name)
+          attendees_by_craft_interest[craft_name] << attendee
+        end
+      end
+    end
+  end
+
 end

@@ -73,4 +73,33 @@ RSpec.describe Event do
       expect(hector.can_build?(sewing)).to eq(true)
     end
   end
+
+  describe "#attendees_by_craft_interest" do
+    it "returns all crafts and attendees who are interested" do
+      hector = Person.new({name: 'Hector', interests: ['sewing', 'millinery', 'drawing']})
+      toni = Person.new({name: 'Toni', interests: ['sewing', 'knitting']})
+      tony = Person.new({name: 'Tony', interests: ['drawing', 'knitting']})
+      knitting = Craft.new('knitting', {yarn: 20, scissors: 1, knitting_needles: 2})
+      sewing = Craft.new('sewing', {fabric: 5, scissors: 1, thread: 1})
+      painting = Craft.new('painting', {canvas: 1, paint_brush: 2, paints: 5})
+      event = Event.new("Carla's Craft Connection", [knitting, painting, sewing], [hector, toni, tony])
+
+      expected = {
+        "knitting"=>[toni, tony],
+        "painting"=>[],
+        "sewing"=>[hector, toni]
+      }
+
+      expect(event.attendees_by_craft_interest).to eq(expected)
+      #=> {
+      #
+      #   }
+
+      # event.crafts_that_use('scissors')
+      # #=> [#<Craft:0x00007fe43381a640...>,#<Craft:0x00007fe4422e6610...>]
+
+      # event.crafts_that_use('fire')
+      # #=> []
+    end
+  end
 end
