@@ -46,4 +46,15 @@ class Event
     end
   end
 
+  def crafts_that_use(supply)
+    crafts_that_use = []
+    supply_sym = supply.to_sym
+    crafts.each do |craft|
+      if craft.supplies_required.key?(supply_sym)
+        crafts_that_use << craft
+      end
+    end
+    crafts_that_use
+  end
+
 end
