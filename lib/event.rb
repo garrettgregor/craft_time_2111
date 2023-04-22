@@ -8,4 +8,10 @@ class Event
     @crafts     = crafts
     @attendees  = attendees
   end
+
+  def attendee_names
+    attendees.map do |attendee|
+      attendee.name
+    end
+  end
 end
