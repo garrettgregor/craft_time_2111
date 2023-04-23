@@ -91,15 +91,6 @@ RSpec.describe Event do
       }
 
       expect(event.attendees_by_craft_interest).to eq(expected)
-      #=> {
-      #
-      #   }
-
-      # event.crafts_that_use('scissors')
-      # #=> [#<Craft:0x00007fe43381a640...>,#<Craft:0x00007fe4422e6610...>]
-
-      # event.crafts_that_use('fire')
-      # #=> []
     end
   end
 
@@ -115,6 +106,55 @@ RSpec.describe Event do
 
       expect(event.crafts_that_use("scissors")).to eq([knitting, sewing])
       expect(event.crafts_that_use("fire")).to eq([])
+    end
+  end
+
+  describe "#assign_attendees_to_crafts" do
+    it "randomly assigns people who are interested and have the right supplies" do
+      knitting = Craft.new('knitting', {yarn: 20, scissors: 1, knitting_needles: 2})
+      sewing = Craft.new('sewing', {fabric: 5, scissors: 1, thread: 1})
+      painting = Craft.new('painting', {canvas: 1, paint_brush: 2, paints: 5})
+
+      toni = Person.new({name: 'Toni', interests: ['sewing', 'knitting']})
+      toni.add_supply('yarn', 30)
+      toni.add_supply('scissors', 2)
+      toni.add_supply('knitting_needles', 5)
+      toni.add_supply('fabric', 10)
+      toni.add_supply('scissors', 1)
+      toni.add_supply('thread', 2)
+      toni.add_supply('paint_brush', 10)
+      toni.add_supply('paints', 20)
+
+      tony = Person.new({name: 'Tony', interests: ['drawing', 'knitting', 'painting']})
+      tony.add_supply('yarn', 20)
+      tony.add_supply('scissors', 2)
+      tony.add_supply('knitting_needles', 2)
+
+      hector = Person.new({name: 'Hector', interests: ['sewing', 'millinery', 'drawing', 'painting']})
+      hector.add_supply('fabric', 5)
+      hector.add_supply('scissors', 1)
+      hector.add_supply('thread', 1)
+      hector.add_supply('canvas', 5)
+      hector.add_supply('paint_brush', 10)
+      hector.add_supply('paints', 20)
+
+      event = Event.new("Carla's Craft Connection", [knitting, painting, sewing], [hector, toni, tony])
+      allow(event).to_receive(:sample).and_return([])
+      expect(event.assign_attendees_to_crafts).to eq(
+          {
+            knitting => [],
+            sewing => [],
+            painting => []
+          }
+        )
+      # #=> {#<Craft:0x00007fae4d2a6fb8...>=>[#<Person:0x00007fae4d9526f0...>],
+      #     #<Craft:0x00007fae2f84b950...>=>[#<Person:0x00007fae4d91ac00...>],
+      #     #<Craft:0x00007fae2f032930...>=>[#<Person:0x00007fae2f018490...>]}
+
+      # event.assign_attendees_to_crafts
+      # #=> {#<Craft:0x00007fae4d2a6fb8...>=>[#<Person:0x00007fae4d9526f0...>],
+      # #<Craft:0x00007fae2f84b950...>=>[],
+      # #<Craft:0x00007fae2f032930...>=>[#<Person:0x00007fae4d91ac00...>,#<Person:0x00007fae2f018490...>]}
     end
   end
 end

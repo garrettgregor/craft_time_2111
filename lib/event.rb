@@ -57,4 +57,8 @@ class Event
     crafts_that_use
   end
 
+  def assign_attendees_to_crafts
+    
+  end
+
 end
